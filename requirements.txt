@@ -36,8 +36,39 @@ whitenoise
 sendgrid>=6.11.0
 django-ses>=3.5.0
 
+# AWS S3 for Media Files (Optional)
+boto3>=1.34.0
+django-storages>=1.14.2
+
+# Monitoring & Error Tracking (Optional)
+sentry-sdk>=1.39.1
+
+# Security & Performance
+django-cors-headers>=4.3.1
+django-ratelimit>=4.1.0
+
+# Database File Storage
+django-db-file-storage>=0.5.6
+
+# Forms
+django-crispy-forms>=2.1
+crispy-bootstrap5>=2023.1
+
+# Database Backup (Optional)
+django-dbbackup>=4.0.2
+
+# Environment Management
+python-dotenv>=1.0.0
+
+# Math template filters
+django-mathfilters>=1.0.0
+
+# DNS lookups (required for domain verification)
+# DNS lookups (required for domain verification)
+dnspython>=2.4.0
+
 # Cloudinary for Image Hosting
-cloudinary>=1.36.0
+cloudinary
 django-cloudinary-storage>=0.3.0
 
 # Monitoring & Error Tracking (Optional)
@@ -58,5 +89,4 @@ django-mathfilters>=1.0.0
 
 # DNS lookups (required for domain verification)
 # DNS lookups (required for domain verification)
-dnspython>=2.4.0
 dnspython>=2.4.0

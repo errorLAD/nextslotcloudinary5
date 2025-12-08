@@ -2815,18 +2815,31 @@
                         <i class="bi bi-whatsapp"></i>
                     </a>
                     {% endif %}
-                    <a href="#" class="social-icon facebook" title="Facebook">
+                    {% if provider.facebook_url %}
+                    <a href="{{ provider.facebook_url }}" class="social-icon facebook" target="_blank" title="Facebook">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a href="#" class="social-icon instagram" title="Instagram">
+                    {% endif %}
+                    {% if provider.instagram_url %}
+                    <a href="{{ provider.instagram_url }}" class="social-icon instagram" target="_blank" title="Instagram">
                         <i class="bi bi-instagram"></i>
                     </a>
-                    <a href="#" class="social-icon twitter" title="Twitter">
+                    {% endif %}
+                    {% if provider.twitter_url %}
+                    <a href="{{ provider.twitter_url }}" class="social-icon twitter" target="_blank" title="Twitter">
                         <i class="bi bi-twitter-x"></i>
                     </a>
-                    <a href="#" class="social-icon youtube" title="YouTube">
+                    {% endif %}
+                    {% if provider.linkedin_url %}
+                    <a href="{{ provider.linkedin_url }}" class="social-icon linkedin" target="_blank" title="LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    {% endif %}
+                    {% if provider.youtube_url %}
+                    <a href="{{ provider.youtube_url }}" class="social-icon youtube" target="_blank" title="YouTube">
                         <i class="bi bi-youtube"></i>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -2836,8 +2849,15 @@
             <div class="footer-bottom-content">
                 <p>&copy; 2024 {{ provider.business_name }}. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+                    {% if provider.privacy_policy_url %}
+                    <a href="{{ provider.privacy_policy_url }}" target="_blank">Privacy Policy</a>
+                    {% endif %}
+                    {% if provider.terms_conditions_url %}
+                    <a href="{{ provider.terms_conditions_url }}" target="_blank">Terms of Service</a>
+                    {% endif %}
+                    {% if provider.cancellation_policy_url %}
+                    <a href="{{ provider.cancellation_policy_url }}" target="_blank">Cancellation Policy</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -2984,6 +3004,10 @@
         
         .social-icon.twitter:hover {
             background: #000000;
+        }
+        
+        .social-icon.linkedin:hover {
+            background: #0077b5;
         }
         
         .social-icon.youtube:hover {

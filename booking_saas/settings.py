@@ -502,7 +502,7 @@ OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
 # CSRF Trusted Origins (Required for Railway)
 CSRF_TRUSTED_ORIGINS = [
  
-    'stingray-app-4kct6.ondigitalocean.app',
+    'https://stingray-app-4kct6.ondigitalocean.app/',
     'https://*.railway.app',
     'https://nextslot.in',
     'https://www.nextslot.in',

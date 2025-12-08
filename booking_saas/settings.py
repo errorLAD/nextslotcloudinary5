@@ -20,7 +20,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-produc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,*.ondigitalocean.app').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,stingray-app-4kct6.ondigitalocean.app,nextslot.in,www.nextslot.in').split(',')
 
 # Domain configuration
 DEFAULT_DOMAIN = config('DEFAULT_DOMAIN', default='nextslot.in')
@@ -501,7 +501,8 @@ OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
 
 # CSRF Trusted Origins (Required for Railway)
 CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-200fb.up.railway.app',
+ 
+    'stingray-app-4kct6.ondigitalocean.app',
     'https://*.railway.app',
     'https://nextslot.in',
     'https://www.nextslot.in',

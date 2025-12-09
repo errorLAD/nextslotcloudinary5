@@ -537,11 +537,11 @@
             }
             
             .nav-desktop {
-                display: none;
+                display: none !important;
             }
             
             .nav-desktop.show {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
                 position: absolute;
                 top: 100%;
@@ -554,6 +554,11 @@
                 border-radius: 0 0 20px 20px;
                 z-index: 1000;
                 animation: slideDown 0.3s ease;
+            }
+            
+            /* Hide any navigation links that might be outside the mobile menu */
+            .navbar-custom .nav-link-custom:not(.nav-desktop.show .nav-link-custom) {
+                display: none !important;
             }
             
             @keyframes slideDown {
@@ -1146,8 +1151,45 @@
     <script>
         // Mobile menu toggle
         function toggleMobileMenu() {
-            document.getElementById('navDesktop').classList.toggle('show');
+            const navDesktop = document.getElementById('navDesktop');
+            
+            if (navDesktop.classList.contains('show')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
         }
+        
+        function openMobileMenu() {
+            const navDesktop = document.getElementById('navDesktop');
+            navDesktop.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        }
+        
+        function closeMobileMenu() {
+            const navDesktop = document.getElementById('navDesktop');
+            navDesktop.classList.remove('show');
+            document.body.style.overflow = ''; // Restore background scroll
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navDesktop = document.getElementById('navDesktop');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (navDesktop.classList.contains('show') && 
+                !navDesktop.contains(event.target) && 
+                !mobileToggle.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Close mobile menu when navigation links are clicked
+        document.querySelectorAll('.nav-desktop .nav-link-custom').forEach(link => {
+            link.addEventListener('click', function() {
+                closeMobileMenu();
+            });
+        });
         
         // Auto-submit on select change
         document.querySelector('select[name="type"]')?.addEventListener('change', function() {

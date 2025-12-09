@@ -495,7 +495,7 @@
                         <!-- Authenticated User Navigation -->
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-link-custom dropdown-toggle" href="#" id="userNav" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle"></i> {{ user.get_short_name|default:user.username }}
+                                <i class="bi bi-person-circle"></i> {{ user.get_short_name|default:user.email|default:"User" }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userNav">
                                 {% if user.is_provider %}
@@ -571,7 +571,7 @@
                     </div>
                     {% if user.is_authenticated %}
                         <p style="color: var(--gray-500); font-size: 0.95rem;">
-                            Welcome back, {{ user.get_short_name|default:user.username }}! 
+                            Welcome back, {{ user.get_short_name|default:user.email|default:"User" }}! 
                             <a href="{% url 'accounts:logout' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Logout</a>
                         </p>
                     {% else %}

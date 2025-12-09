@@ -490,21 +490,43 @@
                     <li class="nav-item">
                         <a class="nav-link nav-link-custom" href="{% url 'subscriptions:pricing' %}">Pricing</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link nav-link-custom dropdown-toggle" href="#" id="signupNav" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-plus"></i> Sign Up
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="signupNav">
-                            <li><a class="dropdown-item" href="{% url 'accounts:register_provider' %}"><i class="bi bi-shop"></i> Service Provider</a></li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:register_client' %}"><i class="bi bi-person"></i> Client</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-nav-login" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-nav-signup" href="{% url 'accounts:register_provider' %}"><i class="bi bi-rocket-fill"></i> Start Free</a>
-                    </li>
+                    
+                    {% if user.is_authenticated %}
+                        <!-- Authenticated User Navigation -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-link-custom dropdown-toggle" href="#" id="userNav" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ user.get_short_name|default:user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userNav">
+                                {% if user.is_provider %}
+                                    <li><a class="dropdown-item" href="{% url 'providers:dashboard' %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'providers:appointment_list' %}"><i class="bi bi-calendar-check"></i> Appointments</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'accounts:client_dashboard' %}"><i class="bi bi-calendar3"></i> My Bookings</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'appointments:browse_providers' %}"><i class="bi bi-search"></i> Browse Services</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <!-- Non-authenticated User Navigation -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-link-custom dropdown-toggle" href="#" id="signupNav" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-plus"></i> Sign Up
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="signupNav">
+                                <li><a class="dropdown-item" href="{% url 'accounts:register_provider' %}"><i class="bi bi-shop"></i> Service Provider</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:register_client' %}"><i class="bi bi-person"></i> Client</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-nav-login" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-nav-signup" href="{% url 'accounts:register_provider' %}"><i class="bi bi-rocket-fill"></i> Start Free</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -522,16 +544,41 @@
                         Create your professional booking page in minutes. Accept appointments 24/7, reduce no-shows, and delight your customers with NextSlot.
                     </p>
                     <div class="hero-cta-group">
-                        <a href="{% url 'accounts:register_provider' %}" class="btn-primary-hero">
-                            <i class="bi bi-shop"></i> Sign Up as Provider
-                        </a>
-                        <a href="{% url 'accounts:register_client' %}" class="btn-secondary-hero">
-                            <i class="bi bi-play-circle"></i> Sign Up as Client
-                        </a>
+                        {% if user.is_authenticated %}
+                            {% if user.is_provider %}
+                                <a href="{% url 'providers:dashboard' %}" class="btn-primary-hero">
+                                    <i class="bi bi-speedometer2"></i> Go to Dashboard
+                                </a>
+                                <a href="{% url 'providers:appointment_list' %}" class="btn-secondary-hero">
+                                    <i class="bi bi-calendar-check"></i> View Appointments
+                                </a>
+                            {% else %}
+                                <a href="{% url 'accounts:client_dashboard' %}" class="btn-primary-hero">
+                                    <i class="bi bi-calendar3"></i> My Bookings
+                                </a>
+                                <a href="{% url 'appointments:browse_providers' %}" class="btn-secondary-hero">
+                                    <i class="bi bi-search"></i> Browse Services
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'accounts:register_provider' %}" class="btn-primary-hero">
+                                <i class="bi bi-shop"></i> Sign Up as Provider
+                            </a>
+                            <a href="{% url 'accounts:register_client' %}" class="btn-secondary-hero">
+                                <i class="bi bi-play-circle"></i> Sign Up as Client
+                            </a>
+                        {% endif %}
                     </div>
-                    <p style="color: var(--gray-500); font-size: 0.95rem;">
-                        Already have an account? <a href="{% url 'accounts:login' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Login here</a>
-                    </p>
+                    {% if user.is_authenticated %}
+                        <p style="color: var(--gray-500); font-size: 0.95rem;">
+                            Welcome back, {{ user.get_short_name|default:user.username }}! 
+                            <a href="{% url 'accounts:logout' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Logout</a>
+                        </p>
+                    {% else %}
+                        <p style="color: var(--gray-500); font-size: 0.95rem;">
+                            Already have an account? <a href="{% url 'accounts:login' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Login here</a>
+                        </p>
+                    {% endif %}
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-illustration">
@@ -764,8 +811,20 @@
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4">
                     <h5 class="footer-title">Account</h5>
-                    <a href="{% url 'accounts:login' %}" class="footer-link">Login</a>
-                    <a href="#" class="footer-link">Support</a>
+                    {% if user.is_authenticated %}
+                        {% if user.is_provider %}
+                            <a href="{% url 'providers:dashboard' %}" class="footer-link">Dashboard</a>
+                            <a href="{% url 'providers:appointment_list' %}" class="footer-link">Appointments</a>
+                        {% else %}
+                            <a href="{% url 'accounts:client_dashboard' %}" class="footer-link">My Bookings</a>
+                            <a href="{% url 'appointments:browse_providers' %}" class="footer-link">Browse Services</a>
+                        {% endif %}
+                        <a href="{% url 'accounts:logout' %}" class="footer-link">Logout</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="footer-link">Login</a>
+                        <a href="{% url 'accounts:register_provider' %}" class="footer-link">Provider Sign Up</a>
+                        <a href="{% url 'accounts:register_client' %}" class="footer-link">Client Sign Up</a>
+                    {% endif %}
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4">
                     <h5 class="footer-title">Legal</h5>

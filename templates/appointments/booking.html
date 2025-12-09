@@ -2341,7 +2341,7 @@
                 <p class="business-tagline">{{ provider.mission_statement|default:"Professional services tailored just for you" }}</p>
                 
                 <div class="hero-buttons">
-                    <a href="#booking-section" class="hero-btn appointment" onclick="document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'}); return false;">
+                    <a href="#booking" class="hero-btn appointment" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'}); return false;">
                         <i class="bi bi-calendar-check"></i> Book Appointment
                     </a>
                 </div>
@@ -2982,8 +2982,12 @@
             justify-content: center;
             font-size: 1.1rem;
             color: white;
+            text-decoration: none;
             transition: all 0.3s ease;
             background: rgba(255,255,255,0.1);
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
         
         .social-icon:hover {
@@ -3082,6 +3086,20 @@
             
             .social-icons {
                 justify-content: center;
+            }
+            
+            /* Ensure social links work on mobile touch devices */
+            .social-icon {
+                min-width: 44px;
+                min-height: 44px;
+                pointer-events: auto !important;
+                -webkit-tap-highlight-color: rgba(255,255,255,0.2);
+                touch-action: manipulation;
+            }
+            
+            .social-icon:active {
+                transform: scale(0.95);
+                opacity: 0.8;
             }
             
             .footer-bottom-content {
